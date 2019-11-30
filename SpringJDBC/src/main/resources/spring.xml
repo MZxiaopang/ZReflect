@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd 
+        
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 告诉spring 扫描那个包下的注解 -->
+	<context:component-scan base-package="com.zhiyou"></context:component-scan>
+	<util:properties id="db" location="db.properties"></util:properties>
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="#{db.driver}"></property>
+		<property name="url" value="#{db.url}"></property>
+		<property name="username" value="#{db.username}"></property>
+		<property name="password" value="#{db.password}"></property>
+	</bean>
+	<!-- Spring的  JDBC -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" ></property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 配置一个增强(环绕增强) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="a*" />
+			<tx:method name="d*" />
+			<tx:method name="u*" />
+			<tx:method name="select*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 配置切入点,事物的方法名会覆盖切入点的方法名 -->
+		<aop:pointcut expression="execution(* com.zhiyou.service ..*.*(..))" id="poi"/>
+		<!-- 引用配置的事物增强 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="poi" />
+	</aop:config>
+	
+	
+</beans>
+
+
+

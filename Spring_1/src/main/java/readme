@@ -1,0 +1,72 @@
+为什么要使用Spring
+	因为现在的代码耦合度高，事物控制频繁等。。。。
+使用Spring好处
+1：使用Spring 可以降低我们代码的耦合度，
+2：帮我们控制事物处理，
+3：非侵入式设计轻量级框架
+4：非常容易集成第三方框架
+5：Spring 提供JavaEE 一站式服务。
+
+Spring 中常见术语
+	1：应用程序	（就是我们需要完成的项目）
+	2：框架		（是能完成一定功能的半成品）
+	3：非侵入式设计	（无需继承框架的内部的一些类就能实现代码，后期可以很方便的替换其他框架）
+	4：轻量级与重量级（一般非侵入式的框架都是轻量级的，轻量级以来的东西很少，资源占用少，
+	      部署使用都很简单，重量级则正好相反）
+	5：bean（pojo,model）Java对象
+	6：容器：用来装所有Java对象的一个东西
+	
+Spring 常用组件
+	SpringContext	上下文支持
+	SpringAop	
+	SpringBeans
+	SpringText
+	SpringData
+	SpringJDBC
+
+Spring 常见版本
+	2.5
+	3.x
+		不支持jdk1.4
+	4.x
+		开始支持JDK1.8
+	5.x
+		
+IOC（控制反转）:
+	正控：有程序员自己创建对象，然后再使用对象
+	反控：由Spring容器去创建对象，程序员只负责从容器中拿对象使用即可
+创建对象的权限被反转了，不再由程序员去创建对象了
+
+DI（依赖注入）
+	在创建对象的过程中，给对象里面依赖的属性（简单值，集合，对象）赋值
+	
+Spring  在加载xml的时候，读取到我们配置的bean， 默认使用无参构造，通过反射创建对象
+Spring  的对象默认全是单例的。
+BeanFactory:IOC容器的最底层接口，负责了对象的创建，管理，销毁功能。
+ApplicationContext:继承了BeanFactory接口，除了可以创建管理对象以外，
+还支持国际化，消息机制，AOP，资源加载等很多其他功能
+
+Spring在容器启动的时候就默认创建了对象  lazy-init="true" 可以改变对象的加载时机
+可以在beans标签中 使用default-lazy-init="true" 让所有本全部延时加载
+Spring 默认对象全部都是单例的 可以再标签内修改scope="prototype"来实现多例
+scope的作用域
+	prototype  多例
+	singleton  单例
+	request 	每次请求都是一个对象
+	session    同一个会话共享一个对象
+	globalSession	分布式系统中全局session
+	
+Spring 在创建对象，及销毁对象的时候可以调用指定方法，只需要在bean中配置
+init-method="方法名" destroy-method="方法名" 对于多例对象，只会执行初始化操作，而不会执行销毁操作
+
+spring 实例化对象的4种方式
+	1：无参构造器实例化（最长使用）
+	2：静态工厂实例化
+	3：实例化工厂实例化
+	4：实现FactoryBean接口实例化（由其他框架使用）
+
+
+	
+	
+
+

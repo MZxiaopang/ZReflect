@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>WebDemo01</display-name>
+  <welcome-file-list>		 <!-- 指定项目刚启动时候跳转的页面 -->
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 配置把loginservlet 交给tomcat 去管理（web.xml会由tomcat去自动解析 ）
+  	servlet-name  我们自定义的名字
+  	servlet-class  需要 Tomcat 管理的servlet权限定名
+    -->
+  <servlet>
+  	<servlet-name>lo</servlet-name>
+  	<servlet-class>com.zhiyou.servlet.LoginServlet</servlet-class>
+  
+  </servlet>
+  <!-- 配置servlet对应的浏览器地址 -->
+  <servlet-mapping>
+  	<servlet-name>lo</servlet-name> <!-- 需要与上一个name相同 -->
+  	<url-pattern>/login</url-pattern><!-- 代表浏览器访问地址 -->
+  
+  
+  </servlet-mapping>
+  
+  
+</web-app>

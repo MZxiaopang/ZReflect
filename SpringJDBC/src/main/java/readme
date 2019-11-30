@@ -1,0 +1,81 @@
+数据库连接池
+	Java创建一个数据库连接需要消耗大量的资源，如果一个数据库连接在使用完后直接释放掉
+那么我们就需要频繁的传建数据库连接
+	数据库连接池则相当于一个池子 用来保存数据库连接到当我们使用数据库连接池之后，需要连接数据库的时候
+直接问池子要，一个连接即可，使用完连接之后，连接会自动返回到池子进行类似睡眠的状态，来解决系统资源
+达到一个数据库连接可以反复的进行使用
+类似于：去洗手池洗苹果，直接用水龙头的水洗100个苹果可能需要100升水，如果有个洗菜盆
+我们只需要3升水就能洗完100个苹果，洗苹果的水可以循环使用
+
+SpringJDBC：
+	1:mybathis,hibernate 虽然是非常强大的持久层（ORM），框架，但是由于封装的太多，
+	所以在执行的效率上没有原生的快捷
+	2:Spring事务管理的功能非常强大
+
+为什么需要用事物：
+	1：原子性
+	2：一致性
+	3：隔离性
+	4：持久性
+
+事物使用在哪里？
+1：事物应该在service层进行控制
+2：如果需要进行操作要执行2条以上的sql就应该让其成为一个事物
+
+Spring事物管理的核心接口
+PlatformTransactionManager：最底层的核心接口，定义了获取事物，提交，回滚操作
+	getTransaction：根据当前环境，返回一个已经存在的事物，如果没有则会创建新的事物，并且记录该事物的状态
+	commit：提交事物
+	rollback：回滚事物
+
+TransactionDefinition：里面定义了Spring的7中传播行为
+※（最常用）0：ROPAGATION_REQUIRED  若当前没有事务，则新建一 个事务,若当前已存在一 个事务，则加入到该事务中。(最常用操作)
+		1：PROPAGATION_SUPPORTS  支持当前事务，若当前没有事务，则以非事务方式执行
+		2：PROPAGATION_MANDATORY  使用当前事务，若当前没有事务，则抛出异常
+		3：PROPAGATION_REQUIRES_NEW  新建事务，如果当前存在事务，把当前事务挂起
+		4：PROPAGATION_NOT_SUPPORTED  以非事务方式执行操作，若当前存在事务，则把当前事务挂起
+		5：PROPAGATION_NEVER  以非事务方式执行，如果当前存在事务，则抛出异常
+		6：PROPAGATION_NESTED  如当前存在事务，则嵌套事务内执行，若没有事务则执行PROPAGATION_ REQUIRED类似操作
+
+TransactionStatus：疯转了事物运行时候的状态，比如是否开启新事物，是否已经提交，设置回滚等
+
+xml：配置通用事物，当相同事物非常多的时候，使用xml配置更方便
+	<!-- 告诉spring 扫描那个包下的注解 -->
+	<context:component-scan base-package="com.zhiyou"></context:component-scan>
+	<util:properties id="db" location="db.properties"></util:properties>
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="#{db.driver}"></property>
+		<property name="url" value="#{db.url}"></property>
+		<property name="username" value="#{db.username}"></property>
+		<property name="password" value="#{db.password}"></property>
+	</bean>
+	<!-- Spring的  JDBC -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" ></property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- 配置一个增强(环绕增强) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="a*" />
+			<tx:method name="d*" />
+			<tx:method name="u*" />
+			<tx:method name="select*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 配置切入点,事物的方法名会覆盖切入点的方法名 -->
+		<aop:pointcut expression="execution(* com.zhiyou.service ..*.*(..))" id="poi"/>
+		<!-- 引用配置的事物增强 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="poi" />
+	</aop:config>
+注解 配置特殊事物，当某个事物逻辑与其他事物都不同的时候，可以使用注解配置
+@Transactional
+
+
+

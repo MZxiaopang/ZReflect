@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.zhiyou.mapper.UserMapper">
+  
+  	<resultMap type="user" id="usermap">
+  		<id column="a_id" property="id"/>
+  		<id column="a_name" property="name"/>
+  		<id column="password" property="password"/>
+  		<id column="age" property="age"/>
+  	</resultMap>
+  
+  
+  	<insert id="add" parameterType="user">
+  		insert into user1 values(#{id},#{password},#{name},#{age});
+  	</insert>
+  	
+  	<update id="update" parameterType="user">
+  		update user1 set a_name=#{name} where a_id=#{id};
+  	</update>
+  	
+  	<delete id="delete">
+  		delete from user1 where a_id=#{id};
+  	</delete>
+  
+  	<select id="selectAll" resultMap="usermap">
+  		select *from user1;	
+  	</select>
+  	
+  	<select id="selectByEvery" resultMap="usermap" parameterType="user">
+  		select *from user1
+  		<where>
+  			<if test="id!=0">
+  				a_id=#{id}
+  			</if>
+  			<if test="password!=null">
+  				and password=#{password}
+  			</if>
+  			<if test="name!=null">
+  				and a_name=#{name}
+  			</if>
+  			<if test="age!=0">
+  				and age=#{age}
+  			</if>
+  		</where>
+  	</select>
+  
+  <select id="selectLike" resultMap="usermap" parameterType="user">
+  		select *from user1
+  		<where>
+  			<if test="id!=0">
+  				a_id like concat('%',#{id},'%') 
+  			</if>
+  			<if test="password!=null">
+  				or password like concat('%',#{password},'%') 
+  			</if>
+  			<if test="name!=null">
+  				or a_name like concat('%',#{name},'%') 
+  			</if>
+  			<if test="age!=0">
+  				or age like concat('%',#{age},'%') 
+  			</if>
+  		</where>
+  	
+  </select>
+  
+  <delete id="deleteAll">
+  		delete from user1 where a_id in
+  			
+  		<foreach collection="array" open="(" close=")" index="i" item="id" separator=",">#{id}</foreach>
+  		
+  		
+  		
+  		
+  
+  </delete>
+  
+  
+  
+  
+  
+  
+  
+  
+  </mapper>
+  
+  
+  
+  
+  
+  
+  
+  

@@ -1,0 +1,144 @@
+现在的项目结构：
+src: 下放所有的.java文件
+webcontent: 我们所有html,jsp,css,js,图片一类的文件存放在这里
+build: eclipse 默认web 项目中编译后的.class文件存放在这里
+META-INF:信息包
+web-inf:存放我们的web.xml  以及lib,在web-inf下的资源不允许直接访问。
+lib:专门存放第三方jar包的地方。
+web.xml:项目的核心配置文件。
+
+1997年SUN公司推出了servlet规范，java迎来了自己的web应用
+1998年 JSP技术诞生，当时的java以 jsp+servlet+javabean模式进行web开发
+
+B/S 与C/S 都是软件架构模式
+
+C/S:客户端与服务器架构模式(Client/Server(客户机/服务器)结构)
+	列如：扫雷，qq等 在电脑桌面运行的程序。
+	特点：在客户端存在数据库，用于存放数据与渲染界面，并且所有的交互逻辑都在客户端完成
+	优点：较为安全，用户体验效果好，功能可以很强大
+	缺点：每次升级都要手动更新客户端，针对不同的操作系统可移植性差。
+	
+B/S:浏览器与服务器的架构模式(Browser/Server(浏览器/服务器)结构)
+	特点：JSP，PHP，ASP，等都是基于浏览器访问，业务逻辑全部交给服务器处理，客户端只负责渲染页面。
+	优点：客户端压力小，客户端升级与服务器无关，针对不同的操作系统可移植性强。
+	缺点：安全性较差，用户体验差。
+
+Tomcat目录结构：
+bin:存放的都是tomcat的命令
+conf:存放的都是配置文件
+lib:存放的都是运行tomcat需要的jar包
+logs:存放tomcat的日志信息（例如：启动成功，启动失败）
+temp:存放临时文件
+webapps:存放我们部署的项目。
+work: 存放jsp编译而成的.java文件及.class文件
+apache-tomcat-8.0.53-src: 存放的是tomcat的源代码。
+
+启动项目：
+选中项目右键点击，选择RunAs 选择Run On Server ，然后选择需要添加的项目（或者服务器）即可
+
+解析访问地址：
+http://localhost:8080/WebDemo01/login.html
+
+DNS:可以把域名解析成IP 然后 才合一根据对于的IP地址找到服务器，
+我们输入的www.baidu.com统称域名，需要DNS解析成对应的IP。
+localhost:代表本地主机
+8080: 代表tomcat的应用端口号
+如果想找到一台电脑上的一个应用：需要使用ip+端口来定位,localhost:8080 可以定位到本地电脑的tomcat
+WebDemo01: 叫做上下文路径,一般都是项目名称，因为我们电脑会有多个项目，所有需要根据上下文路径来
+分区需要访问的项目是哪个。
+login.html: 一个项目下有多个页面 ，所有需要根据页面名来确定具体访问的哪个页面。
+
+请求：（request）浏览器向服务器发送数据，称为一次请求
+响应：（respose）服务器返回数据给浏览器，称为一次响应
+
+http:超文本传输协议
+特点：无状态，端口默认是80
+什么是http协议：实际上就是指 浏览器与服务器在进行一问一答过程中必须遵循的规定
+http是tcp/ip上的一个应用层协议
+http约束了什么：
+1：浏览器以什么格式向服务器发送数据
+2：服务器以什么格式接搜浏览器发送的数据
+3：服务器以什么格式响浏览器反馈数据
+4：浏览器以什么格式接收服务器反馈的数据
+
+
+
+
+请求头：
+RequestHeaders  代表请求头，可以在里面查看一些请求头部信息
+Accept: 代表接受类型
+Accept- Emcoding: 表示浏览器支持的压缩编码
+Accpt-Language: 表示浏览器支持的语言
+Connection : 表示客户端与服务器的连接类型  Keep-alive  表示持久连接
+Host: 表搜请求服务器网站 
+Referer: 告诉服务器请求是从那个连接归来的
+User-Agent: 操作系统基本信息
+
+常用的请求方式分为：get,post
+get: 1：在发送数据的时候参数会显示URL后面，多个参数使用&分割会暴露请求信息
+	 2：无法传送大量参数（如上传文件等），一般请求信息大小不能超过8kb
+	 3：传输速度较快
+	
+post:1：post请求的时候参数会隐藏起来，所以较为安全。
+	 2：post请求对于参数大小没有限制（可以上传文件）
+	 3：对比与get来说稍微有点慢。
+	 
+Servlet规范实际上就是sun公司在97年提出的一组接口，这一组接口有tomcat等服务器去实现
+servlet 其实就是遵循servlet规范的java类  可以处理客户端的请求，并且返回响应信息
+
+我们可以把Servlet看成小型服务器，是java编写的客户端服务器，而tomcat就是这些小型服务器运行的容器
+tomcat是一个servlet/jsp的容器，tomcat负责处理客户请求，把客户请求交给对应的servlet来进行处理
+并且将servlet响应的结果返回给客户端。
+
+三次握手与四次挥手：
+三次握手（建立连接）：
+	1：客户端向服务器发送链接
+	2：服务器接收到客户端发送的连接请求后，向客户端发送链接请求
+	3：客户端接收到服务端的连接请求，开始连接。
+		我：能听到我说话么
+		闪光：听到了，你能听到我说话么
+		我：能听到，好我们开始说事
+四次挥手（断开连接）：
+	1：客户端向服务器发送断开连接请求
+	2：服务器接收到客户端发送的断开连接请求
+	3：服务器向客户端发送断开连接请求
+	4：客户端接收到服务器发送的断开连接请求
+	断开连接。
+
+servlet生命周期：
+
+构造器- - - >init方法初始化- - - >循环执行service--->destory(正常关闭tomcat才会执行)
+
+1：构造器：先执行构造器，创建servlet对象，因为servlet中都是实例方法，需要使用对象进行调用
+2：一个servlet生命周期中只会实例化一个对象，默认是在第一次访问的时候创建的。
+3：init方法：早构造器执行完成后立马执行并且只执行一次，负责初始化对象的一些操作
+4：service 方法在客户端每一次访问的时候都会执行。
+5：destory 方法在tomcat正常关闭的时候会执行销毁servlet对象
+
+注意：servlet类必须拥有public 访问修饰符，否则会报错。
+
+servlet的请求流程：
+http://localhost:8080/WebDemo01/login
+1：解析上面的请求信息，根据localhost找到对应主机（本地主机）然后根据80端口号找到本机上的端口为80的程序tomcat
+2：:找到tomcat的server.xml配置文件解析其中的<Context docBase="WebDemo01" path="/WebDemo01" reloadable="true" source="org.eclipse.jst.jee.server:WebDemo01"/>
+标签中的path如果与上面url中一致，则找到对应的项目，如果不一致则404
+3：找到项目路径后会寻找项目中的web.xml并解析，获取其中的url-pattern如果与url中不一致则404
+	如果一致，则找到对应的servlet-name ，然后根据servlet-name找到对应servlet的权限定名
+4：判断servlet缓存池中是否由当前servlet对象
+5：如果缓存池中没有 则根据权限定名获得calss对象然后使用newinstance 创建一个对象,然后将对象放入缓存池中
+	obj=class.formName("com.zhiyou.servlet.Liginservlet").newInstance;
+6：创建servletConfig对象并注入到init（）方法之中，然后调用init（）方法；
+7：创建servletRequest  与servletResponse注入到service方法中，并调用方法
+8：在service方法中处理客户端的请求，并响应客户端。
+
+
+
+
+
+
+
+
+
+
+
+

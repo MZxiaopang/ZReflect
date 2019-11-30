@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 告诉spring 扫描那个包下的注解 -->
+	<!-- <context:component-scan base-package="com.zhiyou"></context:component-scan> -->
+	
+	<bean id="p1" class="com.zhiyou.model.Person"></bean>
+	<!-- 将属性文件加载到Spring上下文中,(在项目中通常只有一个) -->
+	<context:property-placeholder location="classpath:x.properties"/>
+	<bean id="user" class="com.zhiyou.model.User" >
+		<property name="id" value="5"></property>
+		<property name="password" value="8888"></property>
+		<property name="name" value="${name}"></property>
+		<property name="age" value="${age}"></property>
+	</bean> 
+	<!-- //将属性文件当成对象来使用 -->
+	<util:properties id="xxx" location="classpath:x.properties"></util:properties>
+	<bean id="u1"  class="com.zhiyou.model.User">
+		<property name="id" value="5"></property>
+		<property name="name" value="#{xxx.name}"></property>
+		<property name="age" value="#{xxx.age}"></property>
+	</bean>
+	
+	
+</beans>
+
+
+

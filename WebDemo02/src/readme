@@ -1,0 +1,47 @@
+tomcat 支持热部署  但是热部署不会加载web.xml  因为web.xml只会在tomcat启动的时候进行一次加载
+所以如果更改了web.xml就需要重新启动tomcat
+
+Servlet继承结构：
+Servlet 接口
+	GenericServlet 抽象类 继承了Servlet接口
+		HttpServlet 抽象类，继承与GenericServlet抽象类
+
+当使用 httpServlet 的时候 可以分开处理 Get请求 与 Post请求，
+也可以所有业务逻辑都放到doGet方法中，然后由doPost来调用doGet方法处理请求
+也可以把所有请求都放到service里面进行
+
+Servlet 初始化 策略
+<load-on-startup>2</load-on-startup> 可以指定Servlet在什么时候实例化对象
+其值为整数，如果<0代表 什么时候访问  什么时候创建对象(默认策略);
+如果数字>=0  谁最小 谁最先初始化
+Servlet 在进行初始化的时候可以使用<init-param>来指定初始化参数 然后再类中获取
+可以在xml中使用<context-param> 来配置全局参数  ，所有servlet 多可以通过请求获取
+
+
+Servlet 常用方法Api:
+
+web中间的组件跳转
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

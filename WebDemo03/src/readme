@@ -1,0 +1,99 @@
+web中的的组件跳转
+一：请求转发
+req.getRequestDispatcher("ShowServlet").forward(req, resp);
+1: 只有一个请求
+2: URL不会改变(路径上下稳开始)
+3: 可以共享请求中的数据
+4: 由最最后一个servlet来决定影响结果
+5: 请求转发不能跨区域
+6: 可以访问访问WEB-INF下面的资源
+
+二: 重定向
+	resp.sendRedirect("show");
+1: 多次请求
+2: URL会进行改变
+3: 不能共享数据
+4: 由最够一个servlet来决定影响结果
+5: 可以跨域
+6: 无法访问访问WEB-INF下面的资源
+
+
+Servlet 作用域(所有作用域都是用来共享数据的)
+
+	名称									类型							描述
+1：request(请求域)     				HttpServletRequest 		把数据放到请求域当中，可以在一次请求中共享数据
+req.setAttribute("user", user);// 存放数据  
+存放数据的时候  key 一定是字符串类型 value 是object 类型
+req.getAttribute("user");//根据KEY  取出对应数据
+	
+2：session（会话域）				HttpSession 			把数据放到会话作用域当中，只要浏览器不关闭数据就共享
+会话：浏览器的开启称为一次会话，如果关闭浏览器则会话结束
+一般我们通过请求可以获得当前会话对象
+req.getSession().setAttribute("user",user);
+req.getSession().setAttribute("user");
+req.getSession().setAttribute("user",null);
+req.getSession().removeAttribute("user");
+
+3: application（应用域）   			servletContext  		把数据放到应用于当中，应用在服务器启动时创建，服务器关闭时消失
+req.getSession().getServletContext().setAttribute("user", user);
+req.getSession().getServletContext().setAttribute("user");
+
+
+jsp:  java  server  page  JAVA服务器页面
+servlet的作用（职责）：
+1：获得请求参数
+2：调用业务处理方法
+3：控制页面跳转
+servlet的缺点：在servlet中手写html  页面代码非常恶心。而且没有体现职责分离。
+
+servlet的动态页面输出：
+	java为主，+HTML为辅  ==  一个动态页面
+	
+	java为辅，+JSP为主	== 一个动态页面
+
+实际上 JSP就是一个Servlet，在运行的时候会被先编译成servlet然后执行
+
+JSP:三大指令
+
+1：page 用于定义页面的各种属性；以及导包
+2：include(静态包含和动态包含，推荐使用静态包含) 实际上是把一个页面放到另外一个页面当中
+
+静态包含： <%@ include file="/login.jsp" %>
+动态包含：<jsp:include page="/login.jsp"/>
+
+	1：书写方式完全不同，动态包含是使用jsp指令书写
+	2：两者编译后的文件数量不同
+	3：两者执行时间不同：
+		静待包含是在JSP编译成.java文件的时候
+		动态包含是在执行.class文件的时候
+	4：静态包含不能有重名变量，动态包含可以有重名变量（动态包含生成两个servlet）
+3：taglib指令 引入外部标签
+<%@taglib uri="标签的命名空间" prefix="标签的前缀"%>
+
+Servlet如何配置错误页面
+
+JSP中九大内置对象
+pageContext				表示当前jsp对象
+request 				表示请求对象
+session					表示当前会话对象
+application				表示应用对象
+response				表示响应对象
+page					表示当前页面
+out						表示输出流对象
+config					表示jsp配置对象
+exception				表示异常对象
+
+Jsp四大作用域
+pageContext		把数据放到当前页面中。
+request			把数据放到请求域当中，可以在一次请求中共享数据
+session			把数据放到会话域当中，可以在一次会话中共享数据
+application		把数据放到应用域当中，可以在一次应用中共享数据
+
+Jsp的常用动作指令（作业）
+
+<error-page>
+  	<!--  <exception-type>/*</exception-type>-->
+  	<error-code>500</error-code>
+  	<location>/A.jsp</location>
+</error-page>
+

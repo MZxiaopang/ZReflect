@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 告诉spring 扫描那个包下的注解 -->
+	<context:component-scan base-package="com.zhiyou"></context:component-scan>
+
+
+
+	 <bean id="a" class="com.zhiyou.A"></bean>
+	<!-- <bean id="b" class="com.zhiyou.B"></bean>
+	<bean id="b2adsaa " class="com.zhiyou.B"></bean>-->
+	
+	<!-- 定义抽象的bean ，抽离公用的一些属性与值 -->
+	<bean abstract="true" id="abs">
+		<property name="name" value="抽象bean是被用来继承的"></property>
+	</bean>
+	
+	<!-- 只要继承抽象bean，就能继承其属性中的值 -->
+	<bean id="c" class="com.zhiyou.C" parent="abs">
+		<!-- <property name="name" value="haha"></property> -->
+	</bean>
+	
+</beans>
+
+
+

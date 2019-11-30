@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd 
+         http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- 让浏览器通过/hello 访问到对应的类 -->
+	<bean name="/hello" class="com.zhiyou.controller.HelloController"></bean>
+	
+	
+	
+	<!-- SpringMVC 注解驱动 -->
+	<mvc:annotation-driven/>
+	<!-- mvc:默认的servlet处理程序 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 视图解析器 可以帮我们返回的视图自动加上后缀 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
+
+
+

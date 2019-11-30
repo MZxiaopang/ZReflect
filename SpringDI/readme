@@ -1,0 +1,35 @@
+DI:依赖注入，在容器创建对象的过程中，把对象中相关依赖对象（属性）注入其中
+
+DI注入方式：
+	1：自动装配（XML版,了解）
+		xml自动装备使用
+		autowire="byName" 配置，要求set方法必须符合规范
+		的情况下属性名，必须与bean的name或者id保持着一致
+		autowire="bytype" 根据类型注入 不需要去管名字是否一致，但是如果有两个bean类型一致
+		的情况下则会出现异常
+		autowire="constructor"根据构造方法注入，与set方法无关。
+		autowire="no" 不进行自动装配，默认为no
+	<bean name="userDao" class="com.zhiyou.dao.impl.UserDaoImpl"></bean>
+	<bean name="userService" class="com.zhiyou.service.Impl.UserServiceImpl" autowire="constructor"></bean>
+	<bean name="userController" class="com.zhiyou.controller.UserController" autowire="byType"></bean>
+		
+	2：手动装配
+	<bean id="p1" class="com.zhiyou.model.Person"></bean>
+	<!-- 将属性文件加载到Spring上下文中,(在项目中通常只有一个) -->
+	<context:property-placeholder location="classpath:x.properties"/>
+	<bean id="user" class="com.zhiyou.model.User">
+		<property name="id" value="5"></property>
+		<property name="password" value="8888"></property>
+		<property name="name" value="${name}"></property>
+		<property name="age" value="${age}"></property>
+	</bean> 
+	<!-- //将属性文件当成对象来使用 -->
+	<util:properties id="xxx" location="classpath:x.properties"></util:properties>
+	<bean id="u1"  class="com.zhiyou.model.User">
+		<property name="id" value="5"></property>
+		<property name="name" value="#{xxx.name}"></property>
+		<property name="age" value="#{xxx.age}"></property>
+	</bean>
+	3：自动装配（注解版）
+	
+

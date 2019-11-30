@@ -1,0 +1,55 @@
+DI:依赖注入，在容器创建对象的过程中，把对象中相关依赖对象（属性）注入其中
+
+DI注入方式：
+	1：自动装配（XML版,了解）
+		xml自动装备使用
+		autowire="byName" 配置，要求set方法必须符合规范的情况下属性名，必须与bean的name或者id保持着一致
+		autowire="bytype" 配置，要求set方法必须符合规范 根据类型注入 不需要去管名字是否一致，但是如果有两个bean类型(class)一致的情况下则会出现异常
+		autowire="constructor"根据构造方法注入，与set方法无关。但是如果有两个bean类型(class)一致的情况下则会出现异常
+		autowire="no" 不进行自动装配，默认为no
+	2：手动装配
+		1:通过构造方法注入
+		2：通过set方法注入
+		加载属性文件的方式：
+			1：将属性文件加载到Spring上下文中,(在项目中通常只有一个)
+			<context:property-placeholder location="classpath:x.properties"/>
+			取值：${属性文件中的key}
+			2：将属性文件当成对象来使用
+			<util:properties id="xxx" location="x.properties"></util:properties>
+			取值：#{id.属性文件中的key}
+	3：自动装配（注解版）
+		@Autowired:
+			1:可以直接写在属性上，与是否有set方法无关（最多）
+			2:可以写在set方法上，允许一个set方法给多个属性赋值,
+		@Autowired: 注入bean的规则，先按照类型进行注入，如果找到了多个类型的bean，
+		当在set方法上的时候，会按照形参名称与bean的id进行匹配,如果是贴在属性上，需要属性名与id相同
+		缺点：当有多个相同类型的bean，会强行要求同名规则
+		解决：@Qualifier("id") 可以将指定的bean注入到属性中,当其配合@Autowired使用的时候，将
+			不会按照类型匹配，而是必须注入对应的id的bean，如果找不到则报错
+		缺点：使用@Autowired 的时候如果在容器中找不到对应的bean会报错（默认为必须注入）
+		解决：使用required=false，来告诉Spring这个属性的注入并不是必须的。
+			
+		@Resource Java本身的注解，代码侵入式较低，寻找bean的规则先按照属性名去寻找，如果没有找到
+		则，会按照类型去寻找。
+		缺点1：当没有找到属性名，按照类型寻找的时候，找到多个类型会报错
+		解决：@Resource(name = "b2adsaa") 指定注入bean的ID，当指定后不会再按照属性名与类型进行寻找
+			相当于@Autowired+@Qualifier("id")
+		缺点2：默认必须找到相对应的bean，如果找不到会报错
+			
+	使用注解简化IOC配置	
+		@Component：用于修饰类，将类交给IOC容器管理。
+			旗下有注解:@Repository、@Service、@Controller与@Component的功能一致
+			Spring是一个国际化通用框架，所以设计的时候参考了主流架构模式，三层架构，所以在不同的层
+			使用不同的注解来修饰（虽然写什么效果都一样，但就是为了规范）
+			
+			Repository:		修饰数据层
+			Service:		修饰业务层
+			Controller:		修饰控制层
+			Component:		修饰除了以上三层其他的类（例如util等。。）
+			
+			@Repository("asd")  指定bean的id如果没有指定的话，默认为类名（首字母转化为小写）
+			@PostConstruct // 使用注解指定对象创建的时候调用这个方法
+			@PreDestroy // 使用注解指定对象销毁的时候调用这个方法
+			@Scope("是否单例")  用来配置对象作用域
+		
+

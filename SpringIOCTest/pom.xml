@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zhiyou</groupId>
+  <artifactId>SpringIOCTest</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  	<dependencies>	<!-- 引入jar包的父标签 -->
+		<dependency><!-- 引入jar包的标签 -->
+		    <groupId>org.springframework</groupId>		<!--组织唯一标识符  -->
+		    <artifactId>spring-context</artifactId>		<!--项目唯一标识符  -->
+		    <version>4.3.18.RELEASE</version>			<!--版本标识符  -->
+		</dependency>
+		
+		<dependency><!-- 引入jar包的标签 -->
+		    <groupId>org.springframework</groupId>		<!--组织唯一标识符  -->
+		    <artifactId>spring-test</artifactId>		<!--项目唯一标识符  -->
+		    <version>4.3.18.RELEASE</version>			<!--版本标识符  -->
+		 <!--    <scope>test</scope>--> 
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.38</version>
+		</dependency>
+	</dependencies>
+</project>

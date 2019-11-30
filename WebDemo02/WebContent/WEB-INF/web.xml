@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>WebDemo02</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 全局初始化参数 -->
+  <context-param>
+  	<param-name>sex</param-name>
+  	<param-value>男</param-value>
+  </context-param>
+  
+  
+  <servlet>
+  	<servlet-name>lo</servlet-name>
+  	<servlet-class>com.zhiyou.servlet.LoginServlet</servlet-class>
+  	<load-on-startup>2</load-on-startup>	<!-- 在第一次请求初始化操作 -->
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>lo</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>lo2</servlet-name>
+  	<servlet-class>com.zhiyou.servlet.LoginServlet2</servlet-class>
+  	<load-on-startup>3</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>lo2</servlet-name>
+  	<url-pattern>/login2</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>lo3</servlet-name>
+  	<servlet-class>com.zhiyou.servlet.LoginServlet3</servlet-class>
+ 		<!-- 在配置servlet的时候可以设置一些参数（局部参数） -->
+ 		<init-param>
+	 		<param-name>name1</param-name>
+	 		<param-value>张三</param-value>
+	 	</init-param>
+	 	
+	 	<init-param>
+	 		<param-name>name2</param-name>
+	 		<param-value>张三2</param-value>
+	 	</init-param>
+	 	
+	 	<init-param>
+	 		<param-name>name3</param-name>
+	 		<param-value>张三3</param-value>
+	 	</init-param>
+ 	<load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>lo3</servlet-name>
+  	<url-pattern>/login3</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

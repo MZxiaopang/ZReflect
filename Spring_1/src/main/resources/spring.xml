@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
+	
+	<bean id="hello" class="com.zhiyou.Hello">
+		<property name="name" value="张三"/>
+	</bean>
+	<!-- 在4.x版本之后那么被设定为不能重复，但是可以多个 -->
+	<bean name="hello1,h" class="com.zhiyou.Hello" lazy-init="true" scope="prototype" init-method="init" destroy-method="exit">
+		<property name="name" value="李四"/>
+	</bean>
+	<!-- 通过静态工厂获取对象 -->
+	<bean id="factory" class="com.zhiyou.HelloFactory" factory-method="getHello"></bean>
+	<!-- 通过实例工厂获取对象 -->
+	<bean id="factory2" class="com.zhiyou.HelloFactory2" factory-method="getHello" factory-bean="factory"></bean>
+</beans>
+
+
+

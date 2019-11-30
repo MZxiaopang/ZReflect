@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- <bean id="b11" class="com.zhiyou.B"></bean> -->
+	<bean id="b12" class="com.zhiyou.B"></bean>
+	
+	<bean id="a" class="com.zhiyou.A">
+		<!--<property name="b" ref="b11"></property> 根据类中属性名注入 -->
+		
+		<!--通过构造方法注入，name为构造方法中形参的名字  ref为需要引用的bean  -->
+		<!--  <constructor-arg name="bbb" ref="b12" ></constructor-arg>-->
+		
+		<!--通过构造方法注入，index 位构造方法中参数的下标  -->
+		<!--  <constructor-arg name="bbb"  index="0"></constructor-arg>-->
+	</bean>
+		
+	<!-- 读取属性文件，将属性文件加载到Spring上下文中 -->
+	
+	<context:property-placeholder location="classpath:x.properties"/>
+	<bean id="a2" class="com.zhiyou.A">
+		<property name="name" value="${name}" /><!-- 通过属性文件的key取值 -->
+		<property name="age" value="${age}" />
+		<property name="b" ref="b12"/>
+		<!-- list -->
+		<property name="lists">
+			<list>
+				<value>嘿</value>
+				<value>哈</value>
+				<value>呀</value>
+				<value>咦</value>
+			</list>
+		</property>
+		<!-- set -->
+		<property name="sets">
+			<set>
+				<value>嘿</value>
+				<value>哈</value>
+				<value>呀</value>
+				<value>咦</value>
+			</set>
+		</property>
+		<!-- map -->
+		<property name="maps">
+			<props>
+				<prop key="k1">天王盖都会</prop>
+				<prop key="k2">阿大声道</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 读取属性文件， 将属性文件当成对象来使用 -->
+	
+	<util:properties id="xxx" location="x.properties"></util:properties>
+	
+	<bean id="a3" class="com.zhiyou.A">
+		<constructor-arg index="0" ref="b12"></constructor-arg>
+		<constructor-arg index="1" value="#{xxx.name}"></constructor-arg>
+		<constructor-arg index="2" value="#{xxx.age}"></constructor-arg>
+		<!-- list -->
+		<constructor-arg index="3">
+			<list>
+				<value>呃呃呃</value>
+				<value>爱上大萨达是</value>
+			</list>
+		</constructor-arg>
+		<!-- set -->
+		<constructor-arg index="4">
+			<set>
+				<value>呃呃呃</value>
+				<value>第三方</value>
+			</set>
+		</constructor-arg>
+		<!-- map -->
+		<constructor-arg index="5">
+			<map>
+				<entry key="k1" value="haha"></entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	
+</beans>
+
+
+

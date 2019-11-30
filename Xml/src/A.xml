@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+	<book id="book1">
+		<name>西游记</name>
+		<author>吴承恩</author>
+		<year>1986</year>
+	</book>
+	<book id="book2">
+		<name>水浒传</name>
+		<author>施耐庵</author>
+		<year>1987</year>
+	</book>
+</books>
