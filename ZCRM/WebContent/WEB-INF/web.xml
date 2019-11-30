@@ -22,9 +22,11 @@
   <filter>
     <display-name>filter</display-name>
     <filter-name>filter</filter-name>
+    
     <filter-class>com.zhiyou.filter.filter</filter-class>
   </filter>
   <filter-mapping>
+  
     <filter-name>filter</filter-name>
     <url-pattern>/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
