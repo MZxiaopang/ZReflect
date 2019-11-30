@@ -39,7 +39,7 @@ public class LoginController {
 	// 方式三：形参列表模型传参,将前端传过来的参数封装成对应的model类对象，然后注入到形参中
 	//
 	//
-	@RequestMapping(value = "/login3")
+	@RequestMapping("/login3")
 	public void login3(User user, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(user);
 
