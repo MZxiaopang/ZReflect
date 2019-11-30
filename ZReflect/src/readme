@@ -1,0 +1,28 @@
+1：反射：java 最重要的机制之一，是框架的灵魂
+2：在程序运行期间  对于任何一个类  都能知道这个类的所有属性及方法（包括私有的），对于是任何一个对象都可以
+3：调用其任意方法及属性。这就是反射机制。
+获得Class 对象的三种方式：
+	1：通过类名.class
+	2:通过对象.getClass()
+	3:class.forname();
+
+获得类的构造方法:
+1:获得public 的构造方法
+Constructor<?>[] constructors = cl.getConstructors(Object...);
+2:获得所有的构造方法
+Constructor<?>[] declaredConstructors = cl.getDeclaredConstructors();
+3:根据方法参数获得指定的构造方法
+Constructor<?> declaredCon structors = cl.get[Declared]Constructor(Object);
+
+总结 ：
+1：如何获取一个类的. class对象
+2: 如何获得一个类的构造方法
+3: 如何通过class对象来创建类的对象
+4: 如何获得类的所有方法
+5: 如何调用方法
+6: 如何获得一个类中所有属性
+7: 如何调用属性
+8: 如何破坏访问修饰符(权限)
+
+
+
