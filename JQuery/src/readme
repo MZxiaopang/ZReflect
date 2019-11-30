@@ -1,0 +1,18 @@
+
+什么是JQuery：封装了JS，使用jquery可以极大简化我们的编程。
+$  :代表jQuery对象。
+JQuery  id选择器：$("#id");//id是id的名字
+JQuery  class选择器：$(".class");//class是class的名字
+JQuery  元素选择器：$("a");// 等多种选择器
+
+
+
+
+
+
+
+
+
+
+
+
