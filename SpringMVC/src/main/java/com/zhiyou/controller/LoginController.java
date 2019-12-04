@@ -42,6 +42,7 @@ public class LoginController {
 	@RequestMapping("/login3")
 	public void login3(User user, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(user);
+		request.getatt
 
 	}
 
